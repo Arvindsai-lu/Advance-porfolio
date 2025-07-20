@@ -21,7 +21,6 @@ ChartJS.register(
 
 const RadarChartComponent = () => {
   const [profile, setProfile] = useState('cyber');
-  const [animationComplete, setAnimationComplete] = useState(false);
 
   const dataSets = {
     cyber: {
@@ -36,7 +35,10 @@ const RadarChartComponent = () => {
         'Security Compliance'
       ],
       data: [4.5, 4, 4, 4.5, 4, 4, 4, 4],
-      description: 'Cybersecurity expertise based on hands-on experience with enterprise security tools and frameworks'
+      color: {
+        background: 'rgba(239, 68, 68, 0.15)',
+        border: '#ef4444'
+      }
     },
     dev: {
       labels: [
@@ -50,7 +52,10 @@ const RadarChartComponent = () => {
         'Agile/DevOps'
       ],
       data: [4.5, 4, 4, 4, 3.5, 4, 4, 3.5],
-      description: 'Development skills spanning full-stack web development, AI/ML, and cloud technologies'
+      color: {
+        background: 'rgba(77, 181, 255, 0.2)',
+        border: '#4db5ff'
+      }
     },
     tools: {
       labels: [
@@ -64,48 +69,30 @@ const RadarChartComponent = () => {
         'Active Directory/IAM'
       ],
       data: [4.5, 4.5, 4, 3, 4, 4, 3.5, 4],
-      description: 'Proficiency with industry-standard security, development, and analytics tools'
+      color: {
+        background: 'rgba(16, 185, 129, 0.15)',
+        border: '#10b981'
+      }
     }
   };
 
-  const getGradientColors = (profile) => {
-    const colorMap = {
-      cyber: {
-        background: 'rgba(239, 68, 68, 0.15)',
-        border: '#ef4444',
-        point: '#ef4444'
-      },
-      dev: {
-        background: 'rgba(77, 181, 255, 0.2)', // Brighter blue background
-        border: '#4db5ff', // Bright blue that's visible
-        point: '#4db5ff'
-      },
-      tools: {
-        background: 'rgba(16, 185, 129, 0.15)',
-        border: '#10b981',
-        point: '#10b981'
-      }
-    };
-    return colorMap[profile];
-  };
-
-  const colors = getGradientColors(profile);
+  const currentData = dataSets[profile];
 
   const chartData = {
-    labels: dataSets[profile].labels,
+    labels: currentData.labels,
     datasets: [
       {
-        label: `${profile.charAt(0).toUpperCase() + profile.slice(1)} Skills (1-5 Scale)`,
-        data: dataSets[profile].data,
-        backgroundColor: colors.background,
-        borderColor: colors.border,
+        label: `${profile.charAt(0).toUpperCase() + profile.slice(1)} Skills`,
+        data: currentData.data,
+        backgroundColor: currentData.color.background,
+        borderColor: currentData.color.border,
         borderWidth: 2,
-        pointBackgroundColor: colors.point,
+        pointBackgroundColor: currentData.color.border,
         pointBorderColor: '#fff',
         pointBorderWidth: 2,
         pointRadius: 6,
         pointHoverBackgroundColor: '#fff',
-        pointHoverBorderColor: colors.border,
+        pointHoverBorderColor: currentData.color.border,
         pointHoverRadius: 8,
         fill: true
       }
@@ -124,16 +111,13 @@ const RadarChartComponent = () => {
           stepSize: 1,
           backdropColor: 'transparent',
           color: 'rgba(255, 255, 255, 0.7)',
-          font: {
-            size: 12
-          },
+          font: { size: 12 },
           callback: function(value) {
-            const labels = ['', 'Beginner', 'Basic', 'Intermediate', 'Advanced', 'Expert'];
-            return labels[value] || '';
+            return value;
           }
         },
         pointLabels: {
-          color: colors.border,
+          color: currentData.color.border,
           font: {
             size: 13,
             weight: '500'
@@ -168,23 +152,20 @@ const RadarChartComponent = () => {
         backgroundColor: 'rgba(0, 0, 0, 0.8)',
         titleColor: '#fff',
         bodyColor: '#fff',
-        borderColor: colors.border,
+        borderColor: currentData.color.border,
         borderWidth: 1,
         cornerRadius: 8,
         displayColors: false,
         callbacks: {
           label: function(context) {
-            const skillLevels = ['', 'Beginner (1)', 'Basic (2)', 'Intermediate (3)', 'Advanced (4)', 'Expert (5)'];
-            const value = context.parsed.r;
-            return `${context.label}: ${skillLevels[Math.floor(value)] || `Level ${value}`}`;
+            return `${context.label}: ${context.parsed.r}`;
           }
         }
       }
     },
     animation: {
       duration: 1000,
-      easing: 'easeOutQuart',
-      onComplete: () => setAnimationComplete(true)
+      easing: 'easeOutQuart'
     },
     interaction: {
       mode: 'point',
@@ -199,62 +180,83 @@ const RadarChartComponent = () => {
   ];
 
   return (
-    <div className="radar-chart-container">
-      <div className="profile-buttons">
+    <div style={{ width: '100%', height: '500px' }}>
+      {/* Filter Buttons - Theme Adaptive */}
+      <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
         {profileButtons.map(({ key, label, icon }) => (
           <button 
             key={key}
-            className={`profile-btn ${profile === key ? 'active' : ''}`}
-            onClick={() => {
-              setProfile(key);
-              setAnimationComplete(false);
+            className={`radar-filter-btn ${profile === key ? 'active' : ''}`}
+            onClick={() => setProfile(key)}
+            style={{ 
+              margin: '0 0.5rem',
+              padding: '0.75rem 1.5rem',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              borderRadius: '0.5rem',
+              border: '2px solid var(--color-primary)',
+              backgroundColor: profile === key ? 'var(--color-primary)' : 'transparent',
+              color: profile === key ? 'var(--color-bg)' : 'var(--color-primary)',
+              fontWeight: '500',
+              fontSize: '0.9rem',
+              cursor: 'pointer',
+              transition: 'all 0.3s ease',
+              outline: 'none'
+            }}
+            onMouseOver={(e) => {
+              if (profile !== key) {
+                e.target.style.backgroundColor = 'var(--color-primary-variant)';
+                e.target.style.color = 'var(--color-white)';
+              }
+            }}
+            onMouseOut={(e) => {
+              if (profile !== key) {
+                e.target.style.backgroundColor = 'transparent';
+                e.target.style.color = 'var(--color-primary)';
+              }
             }}
           >
-            <span className="profile-icon">{icon}</span>
+            <span>{icon}</span>
             {label}
           </button>
         ))}
       </div>
-      
-      <div className="chart-description">
-        <p>{dataSets[profile].description}</p>
-      </div>
 
-      <div className="chart-wrapper">
+      {/* Chart */}
+      <div style={{ height: '400px' }}>
         <Radar data={chartData} options={options} />
       </div>
 
-      <div className="skill-legend">
-        <div className="legend-item">
-          <span className="legend-color beginner"></span>
-          <span>1-2: Beginner/Basic</span>
-        </div>
-        <div className="legend-item">
-          <span className="legend-color intermediate"></span>
-          <span>3: Intermediate</span>
-        </div>
-        <div className="legend-item">
-          <span className="legend-color advanced"></span>
-          <span>4-5: Advanced/Expert</span>
-        </div>
-      </div>
-
-      {animationComplete && (
-        <div className="chart-stats">
-          <div className="stat">
-            <span className="stat-value">
-              {(dataSets[profile].data.reduce((a, b) => a + b, 0) / dataSets[profile].data.length).toFixed(1)}
-            </span>
-            <span className="stat-label">Average Skill Level</span>
-          </div>
-          <div className="stat">
-            <span className="stat-value">
-              {dataSets[profile].data.filter(skill => skill >= 4).length}
-            </span>
-            <span className="stat-label">Advanced+ Skills</span>
-          </div>
-        </div>
-      )}
+      <style jsx>{`
+        .radar-filter-btn:focus {
+          outline: 2px solid var(--color-primary);
+          outline-offset: 2px;
+        }
+        
+        .radar-filter-btn:active {
+          transform: translateY(1px);
+        }
+        
+        /* Ensure buttons work in both themes */
+        body.modern .radar-filter-btn {
+          border-color: var(--color-primary);
+        }
+        
+        body.hacker .radar-filter-btn {
+          border-color: var(--color-primary);
+        }
+        
+        body.modern .radar-filter-btn.active {
+          background-color: var(--color-primary);
+          color: var(--color-bg);
+        }
+        
+        body.hacker .radar-filter-btn.active {
+          background-color: var(--color-primary);
+          color: var(--color-bg);
+        }
+      `}</style>
     </div>
   );
 };

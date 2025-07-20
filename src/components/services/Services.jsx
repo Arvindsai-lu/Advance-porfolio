@@ -18,7 +18,7 @@ const Services = () => {
     { name: 'CompTIA Security+', issuer: 'CompTIA', category: 'security', status: 'Active' },
     { name: 'Cisco CyberOps Associate', issuer: 'Cisco', category: 'security', status: 'Active' },
     { name: 'Google Cybersecurity Professional', issuer: 'Google', category: 'security', status: 'Active' },
-    { name: 'ISO/IEC 27001', issuer: 'Information Security', category: 'compliance', status: 'Active' },
+    { name: 'ISO/IEC 27001', issuer: 'Skill Front', category: 'compliance', status: 'Active' },
     { name: 'Cloud Security', issuer: 'EC-Council', category: 'cloud', status: 'Active' },
     { name: 'Practical Ethical Hacking', issuer: 'TCM Security', category: 'security', status: 'Active' },
     { name: 'HIPAA Compliance', issuer: 'Leap of Faith', category: 'compliance', status: 'Active' },
@@ -143,11 +143,11 @@ const Services = () => {
 
   const getCertificationIcon = (category) => {
     switch(category) {
-      case 'security': return <BiShield className="cert-icon security" />;
-      case 'cloud': return <BiGlobe className="cert-icon cloud" />;
-      case 'networking': return <BiCode className="cert-icon networking" />;
-      case 'compliance': return <TbCertificate className="cert-icon compliance" />;
-      default: return <BsAward className="cert-icon default" />;
+      case 'security': return '🛡️';
+      case 'cloud': return '☁️';
+      case 'networking': return '🌐';
+      case 'compliance': return '📋';
+      default: return '🏆';
     }
   };
 
@@ -157,41 +157,24 @@ const Services = () => {
       <h2>Certifications & Training</h2>
 
       <div className="container services__container">
-        {/* === Certifications === */}
+        {/* === VERTICAL CERTIFICATIONS GRID === */}
         <article className="service">
           <div className="service__head">
             <h3><TbCertificate /> Professional Certifications</h3>
           </div>
-          <div className="cert__columns">
-            <ul className="service__list">
-              {certifications.slice(0, Math.ceil(certifications.length / 2)).map((cert, index) => (
-                <li key={index}>
-                  <div className="cert-item">
-                    {getCertificationIcon(cert.category)}
-                    <div>
-                      <p><b>{cert.name}</b></p>
-                      <small className="cert-issuer">{cert.issuer}</small>
-                      <span className={`cert-status ${cert.status.toLowerCase()}`}>{cert.status}</span>
-                    </div>
-                  </div>
-                </li>
-              ))}
-            </ul>
-
-            <ul className="service__list">
-              {certifications.slice(Math.ceil(certifications.length / 2)).map((cert, index) => (
-                <li key={index}>
-                  <div className="cert-item">
-                    {getCertificationIcon(cert.category)}
-                    <div>
-                      <p><b>{cert.name}</b></p>
-                      <small className="cert-issuer">{cert.issuer}</small>
-                      <span className={`cert-status ${cert.status.toLowerCase()}`}>{cert.status}</span>
-                    </div>
-                  </div>
-                </li>
-              ))}
-            </ul>
+          
+          {/* Compact Vertical Grid */}
+          <div className="cert-grid-compact">
+            {certifications.map((cert, index) => (
+              <div key={index} className="cert-item-compact">
+                <span className="cert-icon-emoji">{getCertificationIcon(cert.category)}</span>
+                <div className="cert-text">
+                  <span className="cert-name-compact">{cert.name}</span>
+                  <span className="cert-issuer-compact">{cert.issuer}</span>
+                  <span className="cert-status-compact">{cert.status}</span>
+                </div>
+              </div>
+            ))}
           </div>
         </article>
 
