@@ -7,17 +7,57 @@ import { HiDocumentDuplicate } from 'react-icons/hi'
 import { BiMessageSquareDetail } from 'react-icons/bi'
 import { useState } from 'react'
 
-
-
 const Nav = () => {
-    const [activeNav, setActiveNav] = useState('#')
+    // FIXED: Changed initial state from '#' to '#home' for better accessibility
+    const [activeNav, setActiveNav] = useState('#home')
+    
     return (
         <nav>
-            <a href="#" onClick={() => setActiveNav('#')} className={activeNav === '#' ? 'active' : ''}><BiHomeHeart /></a>
-            <a href="#about" onClick={() => setActiveNav('#about')} className={activeNav === '#about' ? 'active' : ''}><BiUser /></a>
-            <a href="#experience" onClick={() => setActiveNav('#experience')} className={activeNav === '#experience' ? 'active' : ''} ><BiBookBookmark /></a>
-            <a href="#portfolio" onClick={() => setActiveNav('#portfolio')} className={activeNav === '#portfolio' ? 'active' : ''}><HiDocumentDuplicate /></a>
-            <a href="#contact" onClick={() => setActiveNav('#contact')} className={activeNav === '#contact' ? 'active' : ''}><BiMessageSquareDetail /></a>
+            {/* FIXED: Changed href="#" to href="#home" and updated onClick handler */}
+            <a 
+                href="#home" 
+                onClick={() => setActiveNav('#home')} 
+                className={activeNav === '#home' ? 'active' : ''}
+                aria-label="Navigate to Home section"
+            >
+                <BiHomeHeart />
+            </a>
+            
+            <a 
+                href="#about" 
+                onClick={() => setActiveNav('#about')} 
+                className={activeNav === '#about' ? 'active' : ''}
+                aria-label="Navigate to About section"
+            >
+                <BiUser />
+            </a>
+            
+            <a 
+                href="#experience" 
+                onClick={() => setActiveNav('#experience')} 
+                className={activeNav === '#experience' ? 'active' : ''}
+                aria-label="Navigate to Experience section"
+            >
+                <BiBookBookmark />
+            </a>
+            
+            <a 
+                href="#portfolio" 
+                onClick={() => setActiveNav('#portfolio')} 
+                className={activeNav === '#portfolio' ? 'active' : ''}
+                aria-label="Navigate to Portfolio section"
+            >
+                <HiDocumentDuplicate />
+            </a>
+            
+            <a 
+                href="#contact" 
+                onClick={() => setActiveNav('#contact')} 
+                className={activeNav === '#contact' ? 'active' : ''}
+                aria-label="Navigate to Contact section"
+            >
+                <BiMessageSquareDetail />
+            </a>
         </nav>
     )
 }
