@@ -173,43 +173,55 @@ const App = () => {
         
         {/* Main content with skip target */}
         <main id="main-content">
-          {/* Above-the-fold content - immediately loaded */}
-          <ErrorBoundary>
-            <Hero />
-          </ErrorBoundary>
+          {/* FIXED: Added id="home" to Hero section wrapper */}
+          <section id="home">
+            <ErrorBoundary>
+              <Hero />
+            </ErrorBoundary>
+          </section>
           
-          <ErrorBoundary>
-            <About />
-          </ErrorBoundary>
+          <section id="about">
+            <ErrorBoundary>
+              <About />
+            </ErrorBoundary>
+          </section>
 
           {/* Below-the-fold content - lazy loaded */}
-          <LazySection 
-            fallback={<LoadingFallback sectionName="Experience" />}
-            threshold={0.2}
-          >
-            <Experience />
-          </LazySection>
+          <section id="experience">
+            <LazySection 
+              fallback={<LoadingFallback sectionName="Experience" />}
+              threshold={0.2}
+            >
+              <Experience />
+            </LazySection>
+          </section>
 
-          <LazySection 
-            fallback={<LoadingFallback sectionName="Services" />}
-            threshold={0.2}
-          >
-            <Services />
-          </LazySection>
+          <section id="services">
+            <LazySection 
+              fallback={<LoadingFallback sectionName="Services" />}
+              threshold={0.2}
+            >
+              <Services />
+            </LazySection>
+          </section>
 
-          <LazySection 
-            fallback={<LoadingFallback sectionName="Portfolio" />}
-            threshold={0.2}
-          >
-            <Portfolio />
-          </LazySection>
+          <section id="portfolio">
+            <LazySection 
+              fallback={<LoadingFallback sectionName="Portfolio" />}
+              threshold={0.2}
+            >
+              <Portfolio />
+            </LazySection>
+          </section>
 
-          <LazySection 
-            fallback={<LoadingFallback sectionName="Contact" />}
-            threshold={0.2}
-          >
-            <Contact />
-          </LazySection>
+          <section id="contact">
+            <LazySection 
+              fallback={<LoadingFallback sectionName="Contact" />}
+              threshold={0.2}
+            >
+              <Contact />
+            </LazySection>
+          </section>
 
           <LazySection 
             fallback={<LoadingFallback sectionName="Footer" />}
@@ -219,7 +231,7 @@ const App = () => {
           </LazySection>
         </main>
 
-{/* 🤖 Enhanced Floating Chat Assistant */}
+        {/* 🤖 Enhanced Floating Chat Assistant */}
         <ErrorBoundary>
           <a
             href="https://chatgpt.com/g/g-682c09ae8ff48191913c618b30818727-arvind-resume-assistant"
