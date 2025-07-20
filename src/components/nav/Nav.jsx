@@ -8,12 +8,11 @@ import { BiMessageSquareDetail } from 'react-icons/bi'
 import { useState } from 'react'
 
 const Nav = () => {
-    // FIXED: Changed initial state from '#' to '#home' for better accessibility
+    // Changed initial state from '#' to '#home' for better accessibility
     const [activeNav, setActiveNav] = useState('#home')
     
     return (
         <nav>
-            {/* FIXED: Changed href="#" to href="#home" and updated onClick handler */}
             <a 
                 href="#home" 
                 onClick={() => setActiveNav('#home')} 

@@ -5,11 +5,11 @@ import HeaderSocials from '../header/HeaderSocials';
 import MatrixBackground from './MatrixBackground';
 
 const Hero = () => {
-  const [theme, setTheme] = useState(document.body.className);
+  const [theme, setTheme] = useState(document.body.className || 'hacker');
 
   useEffect(() => {
     const observer = new MutationObserver(() => {
-      setTheme(document.body.className);
+      setTheme(document.body.className || 'hacker');
     });
 
     observer.observe(document.body, {
@@ -22,10 +22,11 @@ const Hero = () => {
 
   return (
     <section className="hero-container">
+      {/* Show matrix background ONLY for hacker theme */}
       {theme === 'hacker' && <MatrixBackground />}
 
       <h1>
-        Hi, I’m<br />
+        Hi, I'm<br />
         <span className="highlight">Arvind Sai Dooda</span>
       </h1>
 

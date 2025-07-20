@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
 
 const ThemeToggle = () => {
-  // Start in 'modern' mode (your default design)
-  const [theme, setTheme] = useState('modern');
+  // Start in 'hacker' mode (default theme)
+  const [theme, setTheme] = useState('hacker');
 
   // Apply the theme class to the body whenever it changes
   useEffect(() => {
     document.body.className = theme;
   }, [theme]);
 
-  // Toggle between modern and hacker
+  // Toggle between hacker and kali
   const toggleTheme = () => {
-    setTheme(theme === 'modern' ? 'hacker' : 'modern');
+    setTheme(theme === 'hacker' ? 'kali' : 'hacker');
   };
 
   return (
@@ -27,7 +27,7 @@ const ThemeToggle = () => {
         padding: '0.5rem 1rem'
       }}
     >
-      {theme === 'modern' ? '💻 Hacker Mode' : '🎨 Modern Mode'}
+      {theme === 'hacker' ? '🐉 Kali Mode' : '💻 Hacker Mode'}
     </button>
   );
 };

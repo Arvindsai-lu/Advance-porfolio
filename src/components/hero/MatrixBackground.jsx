@@ -9,21 +9,46 @@ const MatrixBackground = () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    const letters = '01';
+    // Different symbols for different themes
+    const hackerLetters = '01';
+    const kaliSymbols = '🐉⚡🔱⚔️💀🖤'; // Kali-inspired symbols
+    
     const fontSize = 16;
     const columns = canvas.width / fontSize;
     const drops = Array.from({ length: columns }).fill(1);
 
+    // Get current theme
+    const getCurrentTheme = () => document.body.className || 'kali';
+    
     const draw = () => {
       ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      ctx.fillStyle = '#00FF88';
+      const theme = getCurrentTheme();
+      let letters = hackerLetters;
+      
+      // Set colors and symbols based on theme
+      if (theme === 'hacker') {
+        ctx.fillStyle = '#00FF88';
+        letters = hackerLetters;
+      } else if (theme === 'kali') {
+        // Alternating purple and cyan for Kali theme
+        letters = kaliSymbols;
+      }
+      
       ctx.font = `${fontSize}px monospace`;
 
       drops.forEach((y, i) => {
         const text = letters.charAt(Math.floor(Math.random() * letters.length));
         const x = i * fontSize;
+        
+        // For Kali theme, alternate colors per column
+        if (theme === 'kali') {
+          ctx.fillStyle = i % 2 === 0 ? '#8b5cf6' : '#06b6d4';
+        } else {
+          ctx.fillStyle = '#00FF88';
+        }
+        
         ctx.fillText(text, x, y * fontSize);
 
         if (y * fontSize > canvas.height && Math.random() > 0.975) {
@@ -34,7 +59,19 @@ const MatrixBackground = () => {
     };
 
     const interval = setInterval(draw, 33);
-    return () => clearInterval(interval);
+    
+    // Handle window resize
+    const handleResize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+    
+    window.addEventListener('resize', handleResize);
+    
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
   return (
