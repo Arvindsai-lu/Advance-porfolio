@@ -264,14 +264,14 @@ const Experience = () => {
             
             // 4. MAJOR 1-YEAR INTERNSHIP
             {
-              title: 'Software Engineer Intern (Data Security Analyst)',
-              company: 'Renault Nissan Technology Business Centre India',
+              title: 'Business Intelligence Engineer',
+              company: 'Renault Nissan Technology and Business Centre India',
               date: 'July 2022 – June 2023',
               points: [
-                'Achieved 100% accuracy in secure SQL data extraction with monitoring dashboards.',
-                'Built data protection dashboards during GCP migrations for automotive data security.',
-                'Reduced vulnerabilities by 25% using TIBCO Spotfire dashboards and Python automation.',
-                'Created compliance dashboards for European clients (Italy, France) data protection.'
+                'Built scalable data pipelines using Python and GCP to process 100,000+ records from multiple sources.',
+                'Developed and deployed ML models for business forecasting, integrating predictive analytics into GCP workflows.',
+                'Automated workflows using Python, UIPath, and Excel while creating Spotfire dashboards, reducing processing time by 60%.',
+                'Collaborated with teams to translate business needs into technical solutions and implemented data governance policies.'
               ]
             },
             
